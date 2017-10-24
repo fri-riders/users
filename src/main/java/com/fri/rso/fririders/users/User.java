@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class User {
 
-    private String id;
+    private String uuid;
 
     private String email;
     private String password;
@@ -18,12 +18,12 @@ public class User {
     private Date updatedAt;
     private Date deletedAt;
 
-    public String getId() {
-        return id;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getEmail() {
