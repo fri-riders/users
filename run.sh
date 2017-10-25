@@ -21,9 +21,9 @@ if [ $STATUS -gt 1 ]; then
 	exit $STATUS
 fi
 
-docker run --name rso-users -p 8080:8080 rso-users
+docker run --name rso-users -p 9090:8080 rso-users
 STATUS=$?
 if [ $STATUS -gt 0 ]; then
-	echo "=== docker run --name rso-users -p 8080:8080 rso-users FAILED ==="
+	echo "=== docker run --name rso-users -p 9090:8080 rso-users FAILED ==="
 	exit $STATUS
 fi
