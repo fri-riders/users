@@ -15,8 +15,8 @@ cache:
 
 script:
   - mvn clean package -U
-  - docker build -t tomisebjanic/users .
+  - docker build -t tomisebjanic/rso-users .
 
 after_success:
   - docker login --username "$DOCKERHUB_USERNAME" --password "$DOCKERHUB_PASSWORD"
-  - docker push tomisebjanic/users
+  - docker push tomisebjanic/rso-users

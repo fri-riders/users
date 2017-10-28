@@ -7,6 +7,13 @@ public class UserRepository {
 
     private static List<User> users = new ArrayList<User>();
 
+    static {
+        users.add(new User("user1@example.com", "123"));
+        users.add(new User("user2@example.com", "123"));
+        users.add(new User("user3@example.com", "123"));
+        users.add(new User("user4@example.com", "123"));
+    }
+
     public static List<User> getUsers() {
         return users;
     }

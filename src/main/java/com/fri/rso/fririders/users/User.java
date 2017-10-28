@@ -1,6 +1,7 @@
 package com.fri.rso.fririders.users;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class User {
 
@@ -17,6 +18,26 @@ public class User {
     private Date createdAt;
     private Date updatedAt;
     private Date deletedAt;
+
+    public User(String email, String password) {
+        this.uuid = UUID.randomUUID().toString();
+        this.email = email;
+        this.password = password;
+        this.isActive = true;
+        this.isConfirmed = true;
+        this.createdAt = new Date();
+    }
+
+    public User(String email, String password, String firstName, String lastName) {
+        this.uuid = UUID.randomUUID().toString();
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.isActive = true;
+        this.isConfirmed = true;
+        this.createdAt = new Date();
+    }
 
     public String getUuid() {
         return uuid;
