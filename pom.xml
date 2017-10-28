@@ -18,6 +18,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kumuluz.version>2.5.0-SNAPSHOT</kumuluz.version>
+        <kumuluz.maven.version>2.4.1</kumuluz.maven.version>
         <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
     </properties>
 
@@ -29,11 +30,6 @@
                 <version>${kumuluz.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.kumuluz.ee</groupId>
-                <artifactId>kumuluzee-maven-plugin</artifactId>
-                <version>2.4.1</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -68,7 +64,7 @@
             <plugin>
                 <groupId>com.kumuluz.ee</groupId>
                 <artifactId>kumuluzee-maven-plugin</artifactId>
-                <version>${kumuluz.version}</version>
+                <version>${kumuluz.maven.version}</version>
                 <executions>
                     <execution>
                         <id>package</id>
