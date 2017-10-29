@@ -1,4 +1,4 @@
-package com.fri.rso.fririders.users;
+package com.fri.rso.fririders.users.entity;
 
 import java.util.ArrayList;
 import java.util.List;

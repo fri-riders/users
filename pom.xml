@@ -19,6 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kumuluz.version>2.5.0-SNAPSHOT</kumuluz.version>
         <kumuluz.maven.version>2.4.1</kumuluz.maven.version>
+        <kumuluzee-config.version>1.1.0-SNAPSHOT</kumuluzee-config.version>
         <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
     </properties>
 
@@ -56,6 +57,15 @@
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee</groupId>
+            <artifactId>kumuluzee-cdi-weld</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.config</groupId>
+            <artifactId>kumuluzee-config-etcd</artifactId>
+            <version>${kumuluzee-config.version}</version>
         </dependency>
     </dependencies>
 
