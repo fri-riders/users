@@ -12,14 +12,25 @@ public class ConfigurationEventHandler {
     private static final Logger log = Logger.getLogger(ConfigurationEventHandler.class.getName());
 
     public void init(@Observes @Initialized(ApplicationScoped.class) Object init) {
-        String watchedKey = "users-config.enable-registration";
+        String enableRegistrationWatchedKey = "users-config.enable-registration";
+        String enableLoginWatchedKey = "users-config.enable-login";
 
-        ConfigurationUtil.getInstance().subscribe(watchedKey, (String key, String value) -> {
-            if (watchedKey.equals(key)) {
+        ConfigurationUtil.getInstance().subscribe(enableRegistrationWatchedKey, (String key, String value) -> {
+            if (enableRegistrationWatchedKey.equals(key)) {
                 if ("true".equals(value.toLowerCase())) {
                     log.info("Registration is enabled.");
                 } else {
                     log.info("Registration is disabled.");
+                }
+            }
+        });
+
+        ConfigurationUtil.getInstance().subscribe(enableLoginWatchedKey, (String key, String value) -> {
+            if (enableLoginWatchedKey.equals(key)) {
+                if ("true".equals(value.toLowerCase())) {
+                    log.info("Login is enabled.");
+                } else {
+                    log.info("Login is disabled.");
                 }
             }
         });

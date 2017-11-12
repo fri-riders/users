@@ -12,6 +12,24 @@ public class ConfigProperties {
     @ConfigValue(watch = true)
     private boolean enableRegistration;
 
+    @ConfigValue(watch = true)
+    private boolean enableLogin;
+
+    private int passwordMinLength;
+
+    public String toJsonString() {
+        return String.format(
+                "{" +
+                        "\"enableRegistration\": \"%b\"," +
+                        "\"enableLogin\": \"%b\"," +
+                        "\"passwordMinLength\": %d" +
+                        "}",
+                this.isEnableRegistration(),
+                this.isEnableLogin(),
+                this.getPasswordMinLength()
+        );
+    }
+
     public boolean isEnableRegistration() {
         return enableRegistration;
     }
@@ -20,13 +38,19 @@ public class ConfigProperties {
         this.enableRegistration = enableRegistration;
     }
 
-    public String toJsonString() {
-        return String.format(
-                "{" +
-                    "\"enableRegistration\": \"%b\"" +
-                "}",
-                this.isEnableRegistration()
-        );
+    public boolean isEnableLogin() {
+        return enableLogin;
     }
 
+    public void setEnableLogin(boolean enableLogin) {
+        this.enableLogin = enableLogin;
+    }
+
+    public int getPasswordMinLength() {
+        return passwordMinLength;
+    }
+
+    public void setPasswordMinLength(int passwordMinLength) {
+        this.passwordMinLength = passwordMinLength;
+    }
 }

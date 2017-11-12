@@ -3,7 +3,7 @@ services:
   postgres:
     image: postgres:10.0
     ports:
-      - 5432:5432
+      - 54320:5432
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -16,3 +16,7 @@ services:
       KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres:5432/rso_users
     depends_on:
       - postgres
+  consul:
+    image: consul
+    ports:
+      - 8500:8500
