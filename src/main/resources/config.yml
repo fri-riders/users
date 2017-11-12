@@ -3,6 +3,12 @@ kumuluzee:
   version: 1.0.0
   env:
     name: dev
+  datasources:
+    - jndi-name: jdbc/UsersDS
+      connection-url: jdbc:postgresql://localhost:5432/rso_users
+      username: postgres
+      password: postgres
+      max-pool-size: 20
   config:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000

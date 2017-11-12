@@ -1,43 +1,51 @@
 package com.fri.rso.fririders.users.entity;
 
+import org.eclipse.persistence.annotations.UuidGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
-public class User {
+@Entity
+@Table(name = "users")
+@NamedQueries({
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+    @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.uuid = :id"),
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
+})
+@UuidGenerator(name = "idGenerator")
+public class User implements Serializable {
 
+    @Id
+    @GeneratedValue(generator = "idGenerator")
     private String uuid;
 
+    @Column(name = "email", unique = true)
     private String email;
+
+    @Column(name = "password")
     private String password;
+
+    @Column(name = "first_name")
     private String firstName;
+
+    @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "is_active")
     private boolean isActive;
+
+    @Column(name = "is_confirmed")
     private boolean isConfirmed;
 
+    @Column(name = "created_at", columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Date createdAt;
+
+    @Column(name = "updated_at")
     private Date updatedAt;
+
+    @Column(name = "deleted_at")
     private Date deletedAt;
-
-    public User(String email, String password) {
-        this.uuid = UUID.randomUUID().toString();
-        this.email = email;
-        this.password = password;
-        this.isActive = true;
-        this.isConfirmed = true;
-        this.createdAt = new Date();
-    }
-
-    public User(String email, String password, String firstName, String lastName) {
-        this.uuid = UUID.randomUUID().toString();
-        this.email = email;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.isActive = true;
-        this.isConfirmed = true;
-        this.createdAt = new Date();
-    }
 
     public String getUuid() {
         return uuid;
