@@ -1,5 +1,6 @@
 package com.fri.rso.fririders.users.resource;
 
+import com.fri.rso.fririders.users.config.ConfigProperties;
 import com.fri.rso.fririders.users.entity.User;
 import com.fri.rso.fririders.users.service.UserService;
 
@@ -19,6 +20,9 @@ public class UserResource {
     @Inject
     private UserService usersBean;
 
+    @Inject
+    private ConfigProperties configProperties;
+
     @GET
     public Response getUsers() {
         List<User> users = usersBean.getUsers();
@@ -36,6 +40,9 @@ public class UserResource {
 
     @POST
     public Response createUser(User user) {
+        if (!configProperties.isEnableRegistration()) {
+            return Response.status(Response.Status.FORBIDDEN).entity(Helpers.buildErrorJson("Registration is currently disabled, please try again later.")).build();
+        }
         if (user == null) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Helpers.buildErrorJson("Request body is missing!")).build();
         }
@@ -44,6 +51,9 @@ public class UserResource {
         }
         if (usersBean.findByEmail(user.getEmail()) != null) {
             return Response.status(Response.Status.BAD_REQUEST).entity(Helpers.buildErrorJson("User with email " + user.getEmail() + " already exists!")).build();
+        }
+        if (configProperties.getPasswordMinLength() > user.getPassword().length()) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(Helpers.buildErrorJson("Password is too short! It should be at least " + configProperties.getPasswordMinLength() + " characters long.")).build();
         }
 
         return  usersBean.createUser(user) ?
