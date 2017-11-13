@@ -7,15 +7,16 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: rso_user
+      POSTGRES_DB: rsouser
   rso-users:
     build: .
     ports:
       - 8080:8080
     environment:
-      KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres:5432/rso_users
+      KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres:5432/rsouser
     depends_on:
       - postgres
+      - consul
   consul:
     image: consul
     ports:

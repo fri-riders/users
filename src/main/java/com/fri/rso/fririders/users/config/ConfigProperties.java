@@ -20,8 +20,8 @@ public class ConfigProperties {
     public String toJsonString() {
         return String.format(
                 "{" +
-                        "\"enableRegistration\": \"%b\"," +
-                        "\"enableLogin\": \"%b\"," +
+                        "\"enableRegistration\": %b," +
+                        "\"enableLogin\": %b," +
                         "\"passwordMinLength\": %d" +
                         "}",
                 this.isEnableRegistration(),

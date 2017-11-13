@@ -5,7 +5,8 @@ kumuluzee:
     name: dev
   datasources:
     - jndi-name: jdbc/UsersDS
-      connection-url: jdbc:postgresql://localhost:5432/rso_users
+      # connection-url: jdbc:postgresql://postgres:5432/rsousers
+      connection-url: jdbc:postgresql://localhost:5432/rsousers
       username: postgres
       password: postgres
       max-pool-size: 20
@@ -15,7 +16,7 @@ kumuluzee:
     consul:
       hosts: http://localhost:8500
 
-rest-config:
+users-config:
   enable-registration: true
   enable-login: true
   password-min-length: 6
