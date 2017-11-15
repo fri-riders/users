@@ -1,0 +1,35 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: users-deployment
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: users
+    spec:
+      containers:
+      - image: tomisebjanic/rso-users:latest
+        name: users
+        env:
+          - name: KUMULUZEE_DISCOVERY_CLUSTER
+            value: bluemix
+          - name: KUMULUZEE_DISCOVERY_CONSUL_HOSTS
+            value: http://consul:8500
+          - name: KUMULUZEE_CONFIG_CONSUL_HOSTS
+            value: http://consul:8500
+          - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
+            value: jdbc:postgresql://postgres-users:5432/users
+          - name: KUMULUZEE_SERVER_BASEURL
+            value: http://169.51.13.134:30477
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: server
+          initialDelaySeconds: 20
+          periodSeconds: 3
+        ports:
+        - containerPort: 8081
+          name: server
+          protocol: TCP
