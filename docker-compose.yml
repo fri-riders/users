@@ -1,23 +1,25 @@
 version: "3"
 services:
-  postgres:
-    image: postgres:10.0
-    ports:
-      - 54320:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: rsouser
   rso-users:
     build: .
     ports:
-      - 8080:8080
+      - 8081:8081
     environment:
       KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres:5432/rsouser
     depends_on:
       - postgres
       - consul
+  postgres:
+    image: postgres:10.0
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: rsouser
   consul:
     image: consul
     ports:
+      - 8400:8400
       - 8500:8500
+      - 8600:8600

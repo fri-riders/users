@@ -149,5 +149,8 @@
     <orderEntry type="library" name="Maven: org.apache.commons:commons-lang3:3.4" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.8.10" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.8.10" level="project" />
+    <orderEntry type="library" name="Maven: com.kumuluz.ee.discovery:kumuluzee-discovery-consul:1.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.kumuluz.ee.discovery:kumuluzee-discovery-common:1.1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.vdurmont:semver4j:2.0.2" level="project" />
   </component>
 </module>
