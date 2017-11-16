@@ -1,5 +1,5 @@
 kumuluzee:
-  name: rso-users
+  name: rsousers
   version: 1.0.0
   env:
     name: dev
@@ -16,12 +16,12 @@ kumuluzee:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
     consul:
-      hosts: http://localhost:8500
+      agent: http://localhost:8500
   discovery:
     ttl: 20
     ping-interval: 15
     consul:
-      hosts: http://localhost:8500
+      agent: http://localhost:8500
 
 users-config:
   enable-registration: true

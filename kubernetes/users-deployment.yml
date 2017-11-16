@@ -15,9 +15,9 @@ spec:
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
             value: bluemix
-          - name: KUMULUZEE_DISCOVERY_CONSUL_HOSTS
+          - name: KUMULUZEE_DISCOVERY_CONSUL_AGENT
             value: http://consul:8500
-          - name: KUMULUZEE_CONFIG_CONSUL_HOSTS
+          - name: KUMULUZEE_CONFIG_CONSUL_AGENT
             value: http://consul:8500
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
             value: jdbc:postgresql://postgres:5432/rsousers
