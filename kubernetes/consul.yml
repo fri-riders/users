@@ -1,55 +1,57 @@
-apiVersion: v1
-kind: ReplicationController
+apiVersion: apps/v1beta1
+kind: Deployment
 metadata:
-  name: consul-deployment
+  name: consul
 spec:
   replicas: 1
-selector:
-  app: consul
   template:
     metadata:
       labels:
-        pool: consulpool
         app: consul
     spec:
       containers:
         - name: consul
           env:
             - name: ENVIRONMENT
-              value: dev
+              value: "dev"
             - name: MASTER_TOKEN
-              value: INITIAL_MASTER_TOKEN_FOR_ACCESS
+              value: "INITIAL_MASTER_TOKEN_FOR_ACCESS"
             - name: GOSSIP_KEY
-              value: ENCRYPTION_KEY_FOR_GOSSIP
+              value: "ENCRYPTION_KEY_FOR_GOSSIP"
             - name: CONSUL_DEBUG
-              value: true
+              value: "true"
             - name: CONSUL_SERVER_COUNT
-              value: 1
+              value: "1"
           image: consul:1.0.0
-          resources:
-            limits:
-              cpu: 1
-              memory: 1024
           imagePullPolicy: Always
           ports:
           - containerPort: 8500
             name: ui-port
+            protocol: TCP
           - containerPort: 8400
             name: alt-port
+            protocol: TCP
           - containerPort: 53
             name: udp-port
+            protocol: UDP
           - containerPort: 8543
             name: https-port
+            protocol: TCP
           - containerPort: 8500
             name: http-port
+            protocol: TCP
           - containerPort: 8301
             name: serflan
+            protocol: TCP
           - containerPort: 8302
             name: serfwan
+            protocol: TCP
           - containerPort: 8600
             name: consuldns
+            protocol: TCP
           - containerPort: 8300
             name: server
+            protocol: TCP
 
 ---
 
@@ -73,4 +75,4 @@ spec:
   - name: consuldns
     port: 8600
   selector:
-    app: consulpool
+    app: consul

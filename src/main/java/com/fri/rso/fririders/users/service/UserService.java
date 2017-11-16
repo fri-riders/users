@@ -21,9 +21,9 @@ public class UserService {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Inject
-    @DiscoverService(value = "rso-accommodations", version = "1.0.x", environment = "dev")
-    private WebTarget webTarget;
+//    @Inject
+//    @DiscoverService(value = "rso-accommodations", version = "1.0.x", environment = "dev")
+//    private WebTarget webTarget;
 
     public List<User> getUsers() {
         List<User> users = entityManager.createNamedQuery("User.findAll", User.class).getResultList();
@@ -86,17 +86,18 @@ public class UserService {
     }
 
     public List<Object> findAccommodations(String userId) {
-        try {
-            WebTarget accommodationsService = webTarget.path("accommodations/all");
-
-            return accommodationsService
-                    .request(MediaType.APPLICATION_JSON)
-                    .get(new GenericType<List<Object>>() {});
-        } catch (ProcessingException e) {
-            System.out.println(e.getMessage());
-
-            return null;
-        }
+//        try {
+//            WebTarget accommodationsService = webTarget.path("accommodations/all");
+//
+//            return accommodationsService
+//                    .request(MediaType.APPLICATION_JSON)
+//                    .get(new GenericType<List<Object>>() {});
+//        } catch (ProcessingException e) {
+//            System.out.println(e.getMessage());
+//
+//            return null;
+//        }
+        return null;
     }
 
     private void beginTransaction() {
