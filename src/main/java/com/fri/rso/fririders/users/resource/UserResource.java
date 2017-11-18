@@ -3,6 +3,8 @@ package com.fri.rso.fririders.users.resource;
 import com.fri.rso.fririders.users.config.ConfigProperties;
 import com.fri.rso.fririders.users.entity.User;
 import com.fri.rso.fririders.users.service.UserService;
+import org.eclipse.microprofile.metrics.annotation.Metered;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -24,6 +26,7 @@ public class UserResource {
     private ConfigProperties configProperties;
 
     @GET
+    @Metered(name = "get_users")
     public Response getUsers() {
         List<User> users = usersBean.getUsers();
 
@@ -39,6 +42,7 @@ public class UserResource {
     }
 
     @POST
+    @Metered(name = "create_user")
     public Response createUser(User user) {
         if (!configProperties.isEnableRegistration()) {
             return Response.status(Response.Status.FORBIDDEN).entity(Helpers.buildErrorJson("Registration is currently disabled, please try again later.")).build();
@@ -63,6 +67,7 @@ public class UserResource {
 
     @GET
     @Path("{id}/accommodations")
+    @Timed(name = "get_accommodations_for_user")
     public Response getAccommodationsForUser(@PathParam("id") String id) {
         User user = usersBean.findById(id);
 

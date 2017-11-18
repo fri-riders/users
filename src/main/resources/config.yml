@@ -35,6 +35,12 @@ kumuluzee:
         jndi-name: jdbc/UsersDS
       disk-space-health-check:
         threshold: 100000000
+  metrics:
+    webinstrumentation:
+      - name: metricsEndpoint
+        url-pattern: /metrics/*
+      - name: usersEndpoint
+        url-pattern: /v1/users/*
 
 users-config:
   enable-registration: true

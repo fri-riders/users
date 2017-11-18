@@ -2,6 +2,7 @@ package com.fri.rso.fririders.users.service;
 
 import com.fri.rso.fririders.users.entity.User;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import org.eclipse.microprofile.metrics.annotation.Counted;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -48,6 +49,7 @@ public class UserService {
     }
 
     @Transactional
+    @Counted(name = "insert_user_counter")
     public boolean createUser(User user) {
         try {
             beginTransaction();
