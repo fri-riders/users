@@ -39,4 +39,14 @@ public class Helpers {
         }
     }
 
+    /**
+     * @param message Message to send
+     * @return JSON object with message
+     */
+    public static String buildMessageJson(String message) {
+        return "{ " +
+                "\"message\": \"" + message + "\"" +
+                " }";
+    }
+
 }

@@ -22,8 +22,22 @@ kumuluzee:
     ping-interval: 15
     consul:
       agent: http://localhost:8500
+  health:
+    servlet:
+      mapping: /health
+      enabled: true
+    logs:
+      enabled: true
+      level: INFO
+      period-s: 30
+    checks:
+      data-source-health-check:
+        jndi-name: jdbc/UsersDS
+      disk-space-health-check:
+        threshold: 100000000
 
 users-config:
   enable-registration: true
   enable-login: true
   password-min-length: 6
+  healthy: true

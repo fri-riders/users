@@ -17,16 +17,20 @@ public class ConfigProperties {
 
     private int passwordMinLength;
 
+    private boolean healthy;
+
     public String toJsonString() {
         return String.format(
                 "{" +
                         "\"enableRegistration\": %b," +
                         "\"enableLogin\": %b," +
-                        "\"passwordMinLength\": %d" +
+                        "\"passwordMinLength\": %d," +
+                        "\"healthy\": %b" +
                         "}",
                 this.isEnableRegistration(),
                 this.isEnableLogin(),
-                this.getPasswordMinLength()
+                this.getPasswordMinLength(),
+                this.isHealthy()
         );
     }
 
@@ -52,5 +56,13 @@ public class ConfigProperties {
 
     public void setPasswordMinLength(int passwordMinLength) {
         this.passwordMinLength = passwordMinLength;
+    }
+
+    public boolean isHealthy() {
+        return healthy;
+    }
+
+    public void setHealthy(boolean healthy) {
+        this.healthy = healthy;
     }
 }

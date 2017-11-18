@@ -16,12 +16,18 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+
+        <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
         <kumuluz.version>2.5.0-SNAPSHOT</kumuluz.version>
         <kumuluz.maven.version>2.4.1</kumuluz.maven.version>
         <kumuluzee-config.version>1.1.0-SNAPSHOT</kumuluzee-config.version>
         <kumuluzee-discovery.version>1.1.0-SNAPSHOT</kumuluzee-discovery.version>
-        <maven-dependency-plugin.version>2.10</maven-dependency-plugin.version>
+        <kumuluzee-metrics.version>1.0.0-SNAPSHOT</kumuluzee-metrics.version>
+        <kumuluzee-health.version>1.0.0-SNAPSHOT</kumuluzee-health.version>
+
+        <postgresql.version>42.0.0</postgresql.version>
     </properties>
 
     <dependencyManagement>
@@ -70,7 +76,7 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>42.0.0</version>
+            <version>${postgresql.version}</version>
         </dependency>
         <dependency>
             <groupId>com.kumuluz.ee.config</groupId>
@@ -81,6 +87,16 @@
             <groupId>com.kumuluz.ee.discovery</groupId>
             <artifactId>kumuluzee-discovery-consul</artifactId>
             <version>${kumuluzee-discovery.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.metrics</groupId>
+            <artifactId>kumuluzee-metrics-core</artifactId>
+            <version>${kumuluzee-metrics.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.kumuluz.ee.health</groupId>
+            <artifactId>kumuluzee-health</artifactId>
+            <version>${kumuluzee-health.version}</version>
         </dependency>
     </dependencies>
 

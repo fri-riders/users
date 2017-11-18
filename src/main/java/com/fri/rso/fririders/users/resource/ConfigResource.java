@@ -1,4 +1,4 @@
-package com.fri.rso.fririders.users.controller;
+package com.fri.rso.fririders.users.resource;
 
 import com.fri.rso.fririders.users.config.ConfigProperties;
 
