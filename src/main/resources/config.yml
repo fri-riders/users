@@ -41,6 +41,26 @@ kumuluzee:
         url-pattern: /metrics/*
       - name: usersEndpoint
         url-pattern: /v1/users/*
+  logs:
+    config-file: '<?xml version="1.0" encoding="UTF-8"?>
+                  <Configuration name="users">
+                    <Appenders>
+                      <Console name="console" target="SYSTEM_OUT">
+                        <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
+                      </Console>
+                    </Appenders>
+                    <Loggers>
+                      <!-- Resources (REST) -->
+                      <Logger name="com.fri.rso.fririders.users.resource.UserResource" level="trace" additivity="false">
+                        <AppenderRef ref="console"/>
+                      </Logger>
+                      <!-- Default logger -->
+                      <Root level="info">
+                        <AppenderRef ref="console" level="info"/>
+                        <AppenderRef ref="logstash" level="trace"/>
+                      </Root>
+                    </Loggers>
+                  </Configuration>'
 
 users-config:
   enable-registration: true

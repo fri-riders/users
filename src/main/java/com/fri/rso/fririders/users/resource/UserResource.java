@@ -4,7 +4,6 @@ import com.fri.rso.fririders.users.config.ConfigProperties;
 import com.fri.rso.fririders.users.entity.User;
 import com.fri.rso.fririders.users.service.UserService;
 import com.kumuluz.ee.logs.cdi.Log;
-import com.kumuluz.ee.logs.cdi.LogParams;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.eclipse.microprofile.metrics.annotation.Timed;
 
@@ -14,12 +13,13 @@ import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.logging.Logger;
 
 @RequestScoped
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @Path("users")
-@Log(LogParams.METRICS)
+@Log
 public class UserResource {
 
     @Inject

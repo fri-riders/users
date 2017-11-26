@@ -2,6 +2,7 @@ package com.fri.rso.fririders.users.resource;
 
 import com.fri.rso.fririders.users.config.ConfigProperties;
 import com.kumuluz.ee.common.runtime.EeRuntime;
+import com.kumuluz.ee.logs.cdi.Log;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -13,6 +14,7 @@ import javax.ws.rs.core.Response;
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 @ApplicationScoped
+@Log
 public class HealthResource {
 
     @Inject
