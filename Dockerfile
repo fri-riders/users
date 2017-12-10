@@ -6,6 +6,6 @@ WORKDIR /app
 
 ADD ./target/users-1.0-SNAPSHOT.jar /app
 
-EXPOSE 8081
+EXPOSE 8082
 
 CMD ["java", "-jar", "users-1.0-SNAPSHOT.jar"]

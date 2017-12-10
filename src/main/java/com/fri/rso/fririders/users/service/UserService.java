@@ -1,6 +1,7 @@
 package com.fri.rso.fririders.users.service;
 
 import com.fri.rso.fririders.users.entity.User;
+import com.fri.rso.fririders.users.resource.Helpers;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 
@@ -11,10 +12,12 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.ProcessingException;
-import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
+import java.util.*;
 
 @RequestScoped
 public class UserService {
@@ -22,14 +25,14 @@ public class UserService {
     @PersistenceContext
     private EntityManager entityManager;
 
-//    @Inject
-//    @DiscoverService(value = "rso-accommodations", version = "1.0.x", environment = "dev")
-//    private WebTarget webTarget;
+    private Client http = ClientBuilder.newClient();
+
+    @Inject
+    @DiscoverService(value = "accommodations")
+    private Optional<String> accommodationsUrl;
 
     public List<User> getUsers() {
-        List<User> users = entityManager.createNamedQuery("User.findAll", User.class).getResultList();
-
-        return users;
+        return entityManager.createNamedQuery("User.findAll", User.class).getResultList();
     }
 
     public User findById(String id) {
@@ -88,18 +91,23 @@ public class UserService {
     }
 
     public List<Object> findAccommodations(String userId) {
-//        try {
-//            WebTarget accommodationsService = webTarget.path("accommodations/all");
-//
-//            return accommodationsService
-//                    .request(MediaType.APPLICATION_JSON)
-//                    .get(new GenericType<List<Object>>() {});
-//        } catch (ProcessingException e) {
-//            System.out.println(e.getMessage());
-//
-//            return null;
-//        }
-        return null;
+        try {
+            System.out.println("accommodationsUrl = " + accommodationsUrl);
+            if (accommodationsUrl.isPresent()) {
+                return http.target(this.accommodationsUrl.get() + "/accommodations/all")
+                        .request(MediaType.APPLICATION_JSON)
+                        .get(new GenericType<List<Object>>() {});
+            } else {
+                ArrayList<Object> error = new ArrayList<>();
+                error.add(Helpers.jsonToMap(Helpers.buildErrorJson("Accommodations service is unreachable.")));
+
+                return error;
+            }
+        } catch (WebApplicationException | ProcessingException e) {
+            System.out.println(e.getMessage());
+
+            return null;
+        }
     }
 
     private void beginTransaction() {

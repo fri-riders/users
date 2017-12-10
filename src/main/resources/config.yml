@@ -11,7 +11,7 @@ kumuluzee:
       max-pool-size: 20
   server:
     http:
-      port: 8081
+      port: 8082
   config:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000

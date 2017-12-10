@@ -3,7 +3,7 @@ services:
   rso-users:
     build: .
     ports:
-      - 8081:8081
+      - 8082:8082
     environment:
       KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres:5432/rsouser
       KUMULUZEE_CONFIG_CONSUL_AGENT: http://consul:8500
@@ -25,3 +25,11 @@ services:
       - 8400:8400
       - 8500:8500
       - 8600:8600
+  accommodations:
+    image: janerz6/accommodations
+    ports:
+      - 8081:8081
+    environment:
+      - CONFIG_SERVER_URL=consul
+    depends_on:
+      - consul
