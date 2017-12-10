@@ -30,6 +30,7 @@ services:
     ports:
       - 8081:8081
     environment:
-      - CONFIG_SERVER_URL=consul
+      - CONFIG_SERVER_URL=http://consul:8500
+      - DISCOVERY_HOSTNAME=accommodations
     depends_on:
       - consul

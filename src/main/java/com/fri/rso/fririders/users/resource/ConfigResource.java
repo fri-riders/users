@@ -26,4 +26,19 @@ public class ConfigResource {
     public Response getConfig() {
         return Response.ok(configProperties.toJsonString()).build();
     }
+
+    @GET
+    @Path("/info")
+    public Response getProjectInfo() {
+        String data = "{" +
+                            "\"clani\": [\"ts4293\"]," +
+                            "\"opis_projekta\": \"Nas projekt implementira aplikacijo za oddajo nepremicnin.\"," +
+                            "\"mikrostoritve\": [\"http://169.51.17.29:30719/v1/users\", \"http://169.51.17.29:32751/accommodations/all\"]," +
+                            "\"github\": [\"https://github.com/fri-riders/users\", \"https://github.com/fri-riders/accommodations\", \"https://github.com/fri-riders/display-bookings\"]," +
+                            "\"travis\": [\"https://travis-ci.org/fri-riders/users\", \"https://travis-ci.org/fri-riders/accommodations\", \"https://travis-ci.org/fri-riders/display-bookings\"]," +
+                            "\"dockerhub\": [\"https://hub.docker.com/r/tomisebjanic/rso-users\", \"https://hub.docker.com/r/janerz6/accommodations\", \"https://hub.docker.com/r/urosbajc/display-bookings\"]" +
+                        "}";
+
+        return Response.ok(data).build();
+    }
 }

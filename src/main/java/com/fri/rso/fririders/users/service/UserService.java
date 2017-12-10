@@ -3,6 +3,7 @@ package com.fri.rso.fririders.users.service;
 import com.fri.rso.fririders.users.entity.User;
 import com.fri.rso.fririders.users.resource.Helpers;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 
 import javax.enterprise.context.RequestScoped;
@@ -17,9 +18,12 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RequestScoped
+@Log
 public class UserService {
 
     @PersistenceContext
@@ -28,7 +32,7 @@ public class UserService {
     private Client http = ClientBuilder.newClient();
 
     @Inject
-    @DiscoverService(value = "accommodations")
+    @DiscoverService(value = "accommodations", version = "*", environment = "")
     private Optional<String> accommodationsUrl;
 
     public List<User> getUsers() {
