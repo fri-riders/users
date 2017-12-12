@@ -21,6 +21,8 @@ spec:
             value: http://consul:8500
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
             value: jdbc:postgresql://postgres:5432/rsousers
+          - name: KUMULUZEE_SERVER_BASEURL
+            value: http://rsousers:8082
         livenessProbe:
           httpGet:
             path: /health
@@ -28,7 +30,7 @@ spec:
           initialDelaySeconds: 20
           periodSeconds: 3
         ports:
-        - containerPort: 8081
+        - containerPort: 8082
           name: server
           protocol: TCP
         resources:

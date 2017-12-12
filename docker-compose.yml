@@ -8,6 +8,7 @@ services:
       KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres-users:5432/rsouser
       KUMULUZEE_CONFIG_CONSUL_AGENT: http://consul:8500
       KUMULUZEE_DISCOVERY_CONSUL_AGENT: http://consul:8500
+      # KUMULUZEE_SERVER_BASEURL: http://rso-users:8082
     depends_on:
       - postgres-users
       - consul
@@ -55,6 +56,7 @@ services:
       KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres-bookings:54320/bookings
       KUMULUZEE_CONFIG_CONSUL_AGENT: http://consul:8500
       KUMULUZEE_DISCOVERY_CONSUL_AGENT: http://consul:8500
+      KUMULUZEE_SERVER_BASEURL: http://rso-bookings:8080
     depends_on:
       - consul
       - postgres-bookings
