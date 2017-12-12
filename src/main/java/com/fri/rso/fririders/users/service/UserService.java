@@ -2,6 +2,7 @@ package com.fri.rso.fririders.users.service;
 
 import com.fri.rso.fririders.users.entity.User;
 import com.fri.rso.fririders.users.resource.Helpers;
+import com.kumuluz.ee.common.config.EeConfig;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.discovery.enums.AccessType;
 import com.kumuluz.ee.logs.cdi.Log;
@@ -13,8 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-import javax.ws.rs.ProcessingException;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
@@ -124,6 +123,8 @@ public class UserService {
     public List<Object> findBookings(String userId) {
         try {
             System.out.println("bookingsUrl = " + bookingsUrl);
+            System.out.println("EeConfig.getInstance().getServer().getBaseUrl() = " + EeConfig.getInstance().getServer().getBaseUrl());
+
             if (bookingsUrl.isPresent()) {
                 return http.target(this.bookingsUrl.get() + "/v1/bookings")
                         .request(MediaType.APPLICATION_JSON)
