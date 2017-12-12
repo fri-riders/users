@@ -18,6 +18,7 @@ App is accessible on port `8082`
 * `POST: /v1/users` Create new user (params: `email:string, password:string`)
 * `GET: /v1/users/{uuid}` Returns info about user
 * `GET: /v1/users/{uuid}/accommodations` Returns list of users' accommodations
+* `GET: /v1/users/{uuid}/bookings` Returns list of users' bookings
 ## Config
 * `GET: /v1/config` Returns list of config values
 * `GET: /v1/config/info` Returns info about project

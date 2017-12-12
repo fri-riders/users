@@ -3,6 +3,7 @@ package com.fri.rso.fririders.users.service;
 import com.fri.rso.fririders.users.entity.User;
 import com.fri.rso.fririders.users.resource.Helpers;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
+import com.kumuluz.ee.discovery.enums.AccessType;
 import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 
@@ -32,8 +33,12 @@ public class UserService {
     private Client http = ClientBuilder.newClient();
 
     @Inject
-    @DiscoverService(value = "accommodations", version = "*", environment = "")
+    @DiscoverService(value = "accommodations", version = "*", environment = "dev", accessType = AccessType.DIRECT)
     private Optional<String> accommodationsUrl;
+
+    @Inject
+    @DiscoverService(value = "display-bookings", version = "*", environment = "dev", accessType = AccessType.DIRECT)
+    private Optional<String> bookingsUrl;
 
     public List<User> getUsers() {
         return entityManager.createNamedQuery("User.findAll", User.class).getResultList();
@@ -107,10 +112,34 @@ public class UserService {
 
                 return error;
             }
-        } catch (WebApplicationException | ProcessingException e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
+            ArrayList<Object> error = new ArrayList<>();
+            error.add(Helpers.jsonToMap(Helpers.buildErrorJson("Bookings service is unreachable: " + e.getMessage())));
 
-            return null;
+            return error;
+        }
+    }
+
+    public List<Object> findBookings(String userId) {
+        try {
+            System.out.println("bookingsUrl = " + bookingsUrl);
+            if (bookingsUrl.isPresent()) {
+                return http.target(this.bookingsUrl.get() + "/v1/bookings")
+                        .request(MediaType.APPLICATION_JSON)
+                        .get(new GenericType<List<Object>>() {});
+            } else {
+                ArrayList<Object> error = new ArrayList<>();
+                error.add(Helpers.jsonToMap(Helpers.buildErrorJson("Bookings service is unreachable.")));
+
+                return error;
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            ArrayList<Object> error = new ArrayList<>();
+            error.add(Helpers.jsonToMap(Helpers.buildErrorJson("Bookings service is unreachable: " + e.getMessage())));
+
+            return error;
         }
     }
 

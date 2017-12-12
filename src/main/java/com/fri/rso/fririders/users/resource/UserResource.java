@@ -71,12 +71,25 @@ public class UserResource {
     @Path("{id}/accommodations")
     @Timed(name = "get_accommodations_for_user")
     public Response getAccommodationsForUser(@PathParam("id") String id) {
-        User user = usersBean.findById(id);
-
-        if (user == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(Helpers.buildErrorJson("User with uuid " + id + " not found.")).build();
-        }
+//        User user = usersBean.findById(id);
+//
+//        if (user == null) {
+//            return Response.status(Response.Status.NOT_FOUND).entity(Helpers.buildErrorJson("User with uuid " + id + " not found.")).build();
+//        }
 
         return Response.ok(usersBean.findAccommodations(id)).build();
+    }
+
+    @GET
+    @Path("{id}/bookings")
+    @Timed(name = "get_bookings_for_user")
+    public Response getBookingsForUser(@PathParam("id") String id) {
+//        User user = usersBean.findById(id);
+//
+//        if (user == null) {
+//            return Response.status(Response.Status.NOT_FOUND).entity(Helpers.buildErrorJson("User with uuid " + id + " not found.")).build();
+//        }
+
+        return Response.ok(usersBean.findBookings(id)).build();
     }
 }
