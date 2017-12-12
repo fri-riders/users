@@ -22,7 +22,7 @@ spec:
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
             value: jdbc:postgresql://postgres:5432/rsousers
           - name: KUMULUZEE_SERVER_BASEURL
-            value: http://rsousers:8082
+            value: http://users:8082
         livenessProbe:
           httpGet:
             path: /health
@@ -35,7 +35,7 @@ spec:
           protocol: TCP
         resources:
           requests:
-            cpu: 500m
+            cpu: 250m
 
 ---
 

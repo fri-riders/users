@@ -31,9 +31,9 @@ public class ConfigResource {
     @Path("/info")
     public Response getProjectInfo() {
         String data = "{" +
-                            "\"clani\": [\"ts4293\"]," +
+                            "\"clani\": [\"ts4293\", \"ub6189\", \"je1468\"]," +
                             "\"opis_projekta\": \"Nas projekt implementira aplikacijo za oddajo nepremicnin.\"," +
-                            "\"mikrostoritve\": [\"http://169.51.17.29:30719/v1/users\", \"http://169.51.17.29:32751/accommodations/all\"]," +
+                            "\"mikrostoritve\": [\"http://169.51.17.29:30719/v1/users\", \"http://169.51.17.191:32279/v1/bookings\", \"http://169.51.16.54:32698/swagger-ui.html#/\"]," +
                             "\"github\": [\"https://github.com/fri-riders/users\", \"https://github.com/fri-riders/accommodations\", \"https://github.com/fri-riders/display-bookings\"]," +
                             "\"travis\": [\"https://travis-ci.org/fri-riders/users\", \"https://travis-ci.org/fri-riders/accommodations\", \"https://travis-ci.org/fri-riders/display-bookings\"]," +
                             "\"dockerhub\": [\"https://hub.docker.com/r/tomisebjanic/rso-users\", \"https://hub.docker.com/r/janerz6/accommodations\", \"https://hub.docker.com/r/urosbajc/display-bookings\"]" +
