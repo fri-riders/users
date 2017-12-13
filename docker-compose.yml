@@ -31,7 +31,7 @@ services:
       - 8600:8600
 
   accommodations:
-    image: janerz6/accommodations:0.1
+    image: janerz6/accommodations:0.5
     ports:
       - 8081:8081
     environment:
@@ -49,7 +49,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: bookings
   rso-bookings:
-    image: urosbajc/display-bookings:0.1
+    image: urosbajc/display-bookings:0.2
     ports:
       - 8080:8080
     environment:
