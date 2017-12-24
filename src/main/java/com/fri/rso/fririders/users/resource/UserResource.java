@@ -43,6 +43,12 @@ public class UserResource {
         return (user != null ? Response.ok(user) : Response.status(Response.Status.NOT_FOUND)).build();
     }
 
+    @DELETE
+    @Path("{id}")
+    public Response deleteUser(@PathParam("id") String id) {
+        return (usersBean.deleteUser(id) ? Response.ok() : Response.status(Response.Status.INTERNAL_SERVER_ERROR)).build();
+    }
+
     @POST
     @Metered(name = "create_user")
     public Response createUser(User user) {

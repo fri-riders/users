@@ -5,7 +5,15 @@ import com.fri.rso.fririders.users.resource.Helpers;
 import com.kumuluz.ee.common.config.EeConfig;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.discovery.enums.AccessType;
+import com.kumuluz.ee.discovery.utils.DiscoveryUtil;
+import com.kumuluz.ee.fault.tolerance.annotations.CommandKey;
+import com.kumuluz.ee.logs.LogManager;
+import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
+import org.eclipse.microprofile.faulttolerance.Asynchronous;
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 
 import javax.enterprise.context.RequestScoped;
@@ -18,6 +26,7 @@ import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,10 +35,15 @@ import java.util.Optional;
 @Log
 public class UserService {
 
+    private static final Logger log = LogManager.getLogger(UserService.class.getName());
+
     @PersistenceContext
     private EntityManager entityManager;
 
     private Client http = ClientBuilder.newClient();
+
+    @Inject
+    private DiscoveryUtil discoveryUtil;
 
     @Inject
     @DiscoverService(value = "accommodations", version = "*", environment = "dev", accessType = AccessType.DIRECT)
@@ -98,9 +112,16 @@ public class UserService {
         }
     }
 
+    @CircuitBreaker
+    @Fallback(fallbackMethod = "findAccommodationsFallback")
+    @CommandKey("http-find-accommodations")
+    @Timeout(value = 1, unit = ChronoUnit.SECONDS)
+    @Asynchronous
     public List<Object> findAccommodations(String userId) {
         try {
-            System.out.println("accommodationsUrl = " + accommodationsUrl);
+            log.info("accommodationsUrl = " + accommodationsUrl);
+            log.info("accommodationsUrl.isPresent() = " + accommodationsUrl.isPresent());
+
             if (accommodationsUrl.isPresent()) {
                 return http.target(this.accommodationsUrl.get() + "/accommodations/all")
                         .request(MediaType.APPLICATION_JSON)
@@ -120,10 +141,21 @@ public class UserService {
         }
     }
 
+    public List<Object> findAccommodationsFallback(String userId) {
+        log.warn("findAccommodationsFallback called");
+        return new ArrayList<>();
+    }
+
+    @CircuitBreaker
+    @Fallback(fallbackMethod = "findBookingsFallback")
+    @CommandKey("http-find-bookings")
+    @Timeout(value = 1, unit = ChronoUnit.SECONDS)
+    @Asynchronous
     public List<Object> findBookings(String userId) {
         try {
-            System.out.println("bookingsUrl = " + bookingsUrl);
-            System.out.println("EeConfig.getInstance().getServer().getBaseUrl() = " + EeConfig.getInstance().getServer().getBaseUrl());
+            log.info("bookingsUrl = " + bookingsUrl);
+            log.info("bookingsUrl.isPresent() = " + bookingsUrl.isPresent());
+            log.info("this base url = " + EeConfig.getInstance().getServer().getBaseUrl());
 
             if (bookingsUrl.isPresent()) {
                 return http.target(this.bookingsUrl.get() + "/v1/bookings")
@@ -142,6 +174,11 @@ public class UserService {
 
             return error;
         }
+    }
+
+    public List<Object> findBookingsFallback(String userId) {
+        log.warn("findBookingsFallback called");
+        return new ArrayList<>();
     }
 
     private void beginTransaction() {

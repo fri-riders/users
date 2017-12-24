@@ -10,7 +10,7 @@ spec:
         app: users
     spec:
       containers:
-      - image: tomisebjanic/rso-users:0.6.4
+      - image: tomisebjanic/rso-users:0.7
         name: users
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
@@ -27,7 +27,7 @@ spec:
           httpGet:
             path: /health
             port: server
-          initialDelaySeconds: 20
+          initialDelaySeconds: 60
           periodSeconds: 3
         ports:
         - containerPort: 8082
@@ -35,7 +35,7 @@ spec:
           protocol: TCP
         resources:
           requests:
-            cpu: 250m
+            cpu: 150m
 
 ---
 
