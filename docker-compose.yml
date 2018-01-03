@@ -1,19 +1,18 @@
 version: "3"
 services:
-  rso-users:
+  users:
     build: .
     ports:
       - 8082:8082
     environment:
       KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres-users:5432/rsouser
-      KUMULUZEE_CONFIG_CONSUL_AGENT: http://consul:8500
-      KUMULUZEE_DISCOVERY_CONSUL_AGENT: http://consul:8500
-      KUMULUZEE_SERVER_BASEURL: http://rso-users:8082
+      KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_SERVER_BASEURL: http://users:8082
     depends_on:
       - postgres-users
-      - consul
-      - accommodations
-      - rso-bookings
+      - etcd
+      - bookings
   postgres-users:
     image: postgres:10.0
     ports:
@@ -23,40 +22,57 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: rsouser
 
-  consul:
-    image: consul
+  etcd:
+    image: elcolio/etcd:2.0.10
     ports:
-      - 8400:8400
-      - 8500:8500
-      - 8600:8600
-
-  accommodations:
-    image: janerz6/accommodations:0.5
+      - 2379:2379
+      - 2380:2380
+      - 4001:4001
+      - 7001:7001
+  etcd-browser:
+    image: buddho/etcd-browser
     ports:
-      - 8081:8081
+      - 8000:8000
     environment:
-      - CONFIG_SERVER_URL=http://consul:8500
-      - DISCOVERY_HOSTNAME=accommodations
+      ETCD_HOST: http://etcd
+      AUTH_PASS: doe
     depends_on:
-      - consul
+      - etcd
 
-  postgres-bookings:
-    image: postgres:10.0
-    ports:
-      - 54320:5432
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: bookings
-  rso-bookings:
-    image: urosbajc/display-bookings:0.2
+#  consul:
+#    image: consul
+#    ports:
+#      - 8400:8400
+#      - 8500:8500
+#      - 8600:8600
+
+#  accommodations:
+#    image: janerz6/accommodations:0.5
+#    ports:
+#      - 8081:8081
+#    environment:
+#      - CONFIG_SERVER_URL=http://consul:8500
+#      - DISCOVERY_HOSTNAME=accommodations
+#    depends_on:
+#      - consul
+
+#  postgres-bookings:
+#    image: postgres:10.0
+#    ports:
+#      - 54320:5432
+#    environment:
+#      POSTGRES_USER: postgres
+#      POSTGRES_PASSWORD: postgres
+#      POSTGRES_DB: bookings
+  bookings:
+    image: urosbajc/display-bookings:0.3
     ports:
       - 8080:8080
     environment:
-      KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres-bookings:54320/bookings
-      KUMULUZEE_CONFIG_CONSUL_AGENT: http://consul:8500
-      KUMULUZEE_DISCOVERY_CONSUL_AGENT: http://consul:8500
-      KUMULUZEE_SERVER_BASEURL: http://rso-bookings:8080
+#      KUMULUZEE_DATASOURCES0_CONNECTIONURL: jdbc:postgresql://postgres-bookings:54320/bookings
+      KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_SERVER_BASEURL: http://bookings:8080
     depends_on:
-      - consul
-      - postgres-bookings
+      - etcd
+#      - postgres-bookings

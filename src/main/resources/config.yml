@@ -16,13 +16,13 @@ kumuluzee:
   config:
     start-retry-delay-ms: 500
     max-retry-delay-ms: 900000
-    consul:
-      agent: http://localhost:8500
+    etcd:
+      hosts: http://localhost:8500
   discovery:
     ttl: 20
     ping-interval: 15
-    consul:
-      agent: http://localhost:8500
+    etcd:
+      hosts: http://localhost:8500
   health:
     servlet:
       mapping: /health
@@ -36,6 +36,9 @@ kumuluzee:
         jndi-name: jdbc/UsersDS
       disk-space-health-check:
         threshold: 100000000
+  cors-filter:
+    servlet:
+      allow-origin: "*"
   metrics:
     webinstrumentation:
       - name: metricsEndpoint

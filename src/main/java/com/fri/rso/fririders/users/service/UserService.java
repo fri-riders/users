@@ -115,7 +115,7 @@ public class UserService {
     @CircuitBreaker
     @Fallback(fallbackMethod = "findAccommodationsFallback")
     @CommandKey("http-find-accommodations")
-    @Timeout(value = 1, unit = ChronoUnit.SECONDS)
+    @Timeout(value = 5, unit = ChronoUnit.SECONDS)
     @Asynchronous
     public List<Object> findAccommodations(String userId) {
         try {
@@ -149,7 +149,7 @@ public class UserService {
     @CircuitBreaker
     @Fallback(fallbackMethod = "findBookingsFallback")
     @CommandKey("http-find-bookings")
-    @Timeout(value = 1, unit = ChronoUnit.SECONDS)
+    @Timeout(value = 5, unit = ChronoUnit.SECONDS)
     @Asynchronous
     public List<Object> findBookings(String userId) {
         try {
