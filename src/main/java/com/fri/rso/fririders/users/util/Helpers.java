@@ -1,4 +1,4 @@
-package com.fri.rso.fririders.users.resource;
+package com.fri.rso.fririders.users.util;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;

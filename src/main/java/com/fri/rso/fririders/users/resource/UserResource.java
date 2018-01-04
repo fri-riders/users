@@ -3,6 +3,7 @@ package com.fri.rso.fririders.users.resource;
 import com.fri.rso.fririders.users.config.ConfigProperties;
 import com.fri.rso.fririders.users.entity.User;
 import com.fri.rso.fririders.users.service.UserService;
+import com.fri.rso.fririders.users.util.Helpers;
 import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -36,9 +37,9 @@ public class UserResource {
     }
 
     @GET
-    @Path("{id}")
-    public Response getUser(@PathParam("id") String id) {
-        User user = usersBean.findById(id);
+    @Path("{email}")
+    public Response getUser(@PathParam("email") String email) {
+        User user = usersBean.findByEmail(email);
 
         return (user != null ? Response.ok(user) : Response.status(Response.Status.NOT_FOUND)).build();
     }

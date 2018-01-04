@@ -1,7 +1,8 @@
 package com.fri.rso.fririders.users.service;
 
 import com.fri.rso.fririders.users.entity.User;
-import com.fri.rso.fririders.users.resource.Helpers;
+import com.fri.rso.fririders.users.util.Helpers;
+import com.fri.rso.fririders.users.util.PasswordAuthentication;
 import com.kumuluz.ee.common.config.EeConfig;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.discovery.enums.AccessType;
@@ -78,6 +79,7 @@ public class UserService {
     public boolean createUser(User user) {
         try {
             beginTransaction();
+            user.setPassword(new PasswordAuthentication().hash(user.getPassword().toCharArray()));
             entityManager.persist(user);
             commitTransaction();
 

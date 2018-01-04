@@ -1,6 +1,7 @@
 package com.fri.rso.fririders.users.resource;
 
 import com.fri.rso.fririders.users.config.ConfigProperties;
+import com.fri.rso.fririders.users.util.Helpers;
 import com.kumuluz.ee.common.runtime.EeRuntime;
 import com.kumuluz.ee.logs.cdi.Log;
 
