@@ -69,7 +69,9 @@ public class UserResource {
             return Response.status(Response.Status.BAD_REQUEST).entity(Helpers.buildErrorJson("Password is too short! It should be at least " + configProperties.getPasswordMinLength() + " characters long.")).build();
         }
 
-        return  usersBean.createUser(user) ?
+        User createdUser = usersBean.createUser(user);
+
+        return createdUser != null ?
                 Response.ok(user).build() :
                 Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Helpers.buildErrorJson("An error has occurred while creating user.")).build();
     }

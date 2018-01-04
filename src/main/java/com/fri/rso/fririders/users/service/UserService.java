@@ -76,19 +76,19 @@ public class UserService {
 
     @Transactional
     @Counted(name = "insert_user_counter")
-    public boolean createUser(User user) {
+    public User createUser(User user) {
         try {
             beginTransaction();
             user.setPassword(new PasswordAuthentication().hash(user.getPassword().toCharArray()));
             entityManager.persist(user);
             commitTransaction();
 
-            return true;
+            return user;
         } catch (Exception e) {
             rollbackTransaction();
             System.out.println(e.getMessage());
 
-            return false;
+            return null;
         }
     }
 

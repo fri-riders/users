@@ -26,9 +26,6 @@ public class User implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "token")
-    private String token;
-
     @Column(name = "first_name")
     private String firstName;
 
@@ -130,11 +127,4 @@ public class User implements Serializable {
         this.deletedAt = deletedAt;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 }
