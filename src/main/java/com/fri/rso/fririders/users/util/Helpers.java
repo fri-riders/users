@@ -49,4 +49,14 @@ public class Helpers {
                 " }";
     }
 
+    /**
+     * @param email Message to send
+     * @return JSON object with message
+     */
+    public static String buildIssueJwtJson(String email) {
+        return "{ " +
+                "\"email\": \"" + email + "\"" +
+                " }";
+    }
+
 }

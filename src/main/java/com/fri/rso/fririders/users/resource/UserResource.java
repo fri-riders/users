@@ -1,9 +1,11 @@
 package com.fri.rso.fririders.users.resource;
 
 import com.fri.rso.fririders.users.config.ConfigProperties;
+import com.fri.rso.fririders.users.entity.Jwt;
 import com.fri.rso.fririders.users.entity.User;
 import com.fri.rso.fririders.users.service.UserService;
 import com.fri.rso.fririders.users.util.Helpers;
+import com.fri.rso.fririders.users.util.PasswordAuthentication;
 import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.metrics.annotation.Metered;
 import org.eclipse.microprofile.metrics.annotation.Timed;
@@ -71,9 +73,45 @@ public class UserResource {
 
         User createdUser = usersBean.createUser(user);
 
-        return createdUser != null ?
-                Response.ok(user).build() :
-                Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Helpers.buildErrorJson("An error has occurred while creating user.")).build();
+        if (createdUser != null) {
+            Jwt jwt = usersBean.getJwtForUser(user.getEmail());
+
+            if (jwt != null) {
+                return Response.ok(jwt).build();
+            } else {
+                return Response.ok(Helpers.buildMessageJson("Logging in automatically failed. Please navigate to login to continue")).build();
+            }
+        }
+
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Helpers.buildErrorJson("An error has occurred while creating user.")).build();
+    }
+
+    @Path("login")
+    @Metered(name = "login")
+    public Response login(@QueryParam("email") String email, @QueryParam("password") String password) {
+        if (!configProperties.isEnableLogin()) {
+            return Response.status(Response.Status.FORBIDDEN).entity(Helpers.buildErrorJson("Login is currently disabled, please try again later.")).build();
+        }
+
+        System.out.println("email = " + email);
+
+        User user = usersBean.findByEmail(email);
+
+        if (user == null) {
+            return Response.status(Response.Status.BAD_REQUEST).entity(Helpers.buildErrorJson("User not found.")).build();
+        }
+
+        if (new PasswordAuthentication().authenticate(password.toCharArray(), user.getPassword())) {
+            Jwt jwt = usersBean.getJwtForUser(user.getEmail());
+
+            if (jwt != null) {
+                return Response.ok(jwt).build();
+            } else {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Helpers.buildErrorJson("Login failed. Please try again,")).build();
+            }
+        } else {
+            return Response.status(Response.Status.UNAUTHORIZED).entity(Helpers.buildErrorJson("Login failed. Make sure that you have entered the right email-password combination.")).build();
+        }
     }
 
     @GET

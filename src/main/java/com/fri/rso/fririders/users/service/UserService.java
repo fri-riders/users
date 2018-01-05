@@ -1,5 +1,6 @@
 package com.fri.rso.fririders.users.service;
 
+import com.fri.rso.fririders.users.entity.Jwt;
 import com.fri.rso.fririders.users.entity.User;
 import com.fri.rso.fririders.users.util.Helpers;
 import com.fri.rso.fririders.users.util.PasswordAuthentication;
@@ -25,6 +26,7 @@ import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import java.time.temporal.ChronoUnit;
@@ -44,15 +46,16 @@ public class UserService {
     private Client http = ClientBuilder.newClient();
 
     @Inject
-    private DiscoveryUtil discoveryUtil;
-
-    @Inject
     @DiscoverService(value = "accommodations", version = "*", environment = "dev", accessType = AccessType.DIRECT)
     private Optional<String> accommodationsUrl;
 
     @Inject
     @DiscoverService(value = "display-bookings", version = "*", environment = "dev", accessType = AccessType.DIRECT)
     private Optional<String> bookingsUrl;
+
+    @Inject
+    @DiscoverService(value = "auth", version = "*", environment = "dev", accessType = AccessType.DIRECT)
+    private Optional<String> authUrl;
 
     public List<User> getUsers() {
         return entityManager.createNamedQuery("User.findAll", User.class).getResultList();
@@ -112,6 +115,34 @@ public class UserService {
 
             return false;
         }
+    }
+
+    @CircuitBreaker
+    @Fallback(fallbackMethod = "getJwtForUserFallback")
+    @CommandKey("http-auth-issue-jwt")
+    @Timeout(value = 5, unit = ChronoUnit.SECONDS)
+    @Asynchronous
+    public Jwt getJwtForUser(String email) {
+        if (this.authUrl.isPresent()) {
+            log.info("Call auth service: issue");
+            log.info("URL: " + this.authUrl.get() + "/v1/auth/issue");
+
+            Jwt jwt = new Jwt();
+            jwt.setEmail(email);
+
+            return http.target(this.authUrl.get() + "/v1/auth/issue")
+                    .request(MediaType.APPLICATION_JSON)
+                    .post(Entity.entity(jwt, MediaType.APPLICATION_JSON), Jwt.class);
+        } else {
+            log.warn("Auth service URL not available");
+
+            return null;
+        }
+    }
+
+    public String getJwtForUserFallback() {
+        log.warn("Auth service URL not available (getJwtForUserFallback invoked)");
+        return null;
     }
 
     @CircuitBreaker

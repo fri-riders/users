@@ -13,6 +13,7 @@ services:
       - postgres-users
       - etcd
       - bookings
+      - auth
   postgres-users:
     image: postgres:10.0
     ports:
@@ -76,3 +77,13 @@ services:
     depends_on:
       - etcd
 #      - postgres-bookings
+  auth:
+    build: /Users/tomisebjanic/Dev/rso/auth
+    ports:
+      - 8083:8083
+    environment:
+      KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
+      KUMULUZEE_SERVER_BASEURL: http://auth:8083
+    depends_on:
+      - etcd
