@@ -20,7 +20,7 @@ spec:
           - name: KUMULUZEE_CONFIG_ETCD_HOSTS
             value: http://etcd:2379
           - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
-            value: jdbc:postgresql://postgres:5432/rsousers
+            value: jdbc:postgresql://postgres:5432/rsoproject
           - name: KUMULUZEE_SERVER_BASEURL
             value: http://users:8082
         livenessProbe:

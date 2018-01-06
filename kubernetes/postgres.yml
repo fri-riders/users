@@ -32,7 +32,7 @@ spec:
             - name: POSTGRES_PASSWORD
               value: postgres
             - name: POSTGRES_DB
-              value: rsousers
+              value: rsoproject
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
           ports:
