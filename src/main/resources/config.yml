@@ -52,7 +52,7 @@ kumuluzee:
                       <Console name="console" target="SYSTEM_OUT">
                         <PatternLayout pattern="%d %p %marker %m %X %ex %n"/>
                       </Console>
-                      <Socket name="logstash" host="967a02fb-0315-4cc7-a3e3-8e34412a8bc1-ls.logit.io" port="22992" protocol="tcp">
+                      <Socket name="logstash" host="d40c24bf-5206-4b4c-ba70-3275167a6e4b-ls.logit.io" port="17698" protocol="tcp">
                         <JSONLayout complete="false" compact="true" eventEol="true" charset="UTF-8" properties="true"/>
                       </Socket>
                     </Appenders>
@@ -65,7 +65,9 @@ kumuluzee:
                       <!-- Default logger -->
                       <Root level="all">
                         <AppenderRef ref="console" level="info"/>
+                        <AppenderRef ref="console" level="trace"/>
                         <AppenderRef ref="logstash" level="trace"/>
+                        <AppenderRef ref="logstash" level="info"/>
                       </Root>
                     </Loggers>
                   </Configuration>'
@@ -99,6 +101,17 @@ kumuluzee:
               size: 5s
               buckets: 5
       http-auth-issue-jwt:
+        timeout:
+          value: 5000ms
+        circuit-breaker:
+          request-threshold: 10
+          failure-ratio: 0.3
+          delay: 3000ms
+          metrics:
+            rolling-window:
+              size: 5s
+              buckets: 5
+      http-auth-verify-jwt:
         timeout:
           value: 5000ms
         circuit-breaker:

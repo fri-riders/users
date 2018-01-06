@@ -14,7 +14,7 @@ cache:
     - $HOME/.m2
 
 env:
-  - DOCKER_IMAGE=tomisebjanic/rso-users:0.10
+  - DOCKER_IMAGE=tomisebjanic/rso-users:1.0
 
 script:
   - mvn clean package -U

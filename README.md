@@ -1,10 +1,5 @@
 [![Build Status](https://travis-ci.org/fri-riders/users.svg?branch=master)](https://travis-ci.org/fri-riders/users)
 # Users Service
-## Run manually
-1. Build app: `mvn clean package`
-1. Start Postgres: `docker run -e POSTGRES_PASSWORD=postgres -p 5432:5432 postgres:10.0`
-1. Start Consul: `docker run -p 8500:8500 consul`
-1. Run app: `java -jar target/users-1.0-SNAPSHOT.jar`
 
 ## Run with Docker Compose
 1. Build app: `mvn clean package`
@@ -16,7 +11,10 @@ App is accessible on port `8082`
 ## Users
 * `GET: /v1/users` Returns list of users
 * `POST: /v1/users` Create new user (params: `email:string, password:string`)
-* `GET: /v1/users/{uuid}` Returns info about user
+* `GET: /v1/users/login?email&password` Login user
+* `GET: /v1/users/{uuid}` Returns info about user \***
+* `PUT: /v1/users/{uuid}` Update user \***
+* `DELETE: /v1/users/{uuid}` Delete user user \***
 * `GET: /v1/users/{uuid}/accommodations` Returns list of users' accommodations
 * `GET: /v1/users/{uuid}/bookings` Returns list of users' bookings
 ## Config
@@ -29,3 +27,6 @@ App is accessible on port `8082`
 * `GET: /v1/health-test/dos/{n}` Execute calculation of n-th Fibonacci number
 ## Metrics
 * `GET: /metrics` Returns metrics
+
+#### Notes
+\*** must be authenticated with `authToken` header present and supplied with valid JWT from login
