@@ -10,7 +10,7 @@ spec:
         app: users
     spec:
       containers:
-      - image: tomisebjanic/rso-users:1.0.1
+      - image: tomisebjanic/rso-users:1.0.2
         name: users
         env:
           - name: KUMULUZEE_DISCOVERY_CLUSTER
