@@ -41,9 +41,9 @@ services:
     depends_on:
       - etcd
   auth:
-    build: tomisebjanic/rso-auth:1.0.2
+    image: tomisebjanic/rso-auth:1.0.3
     ports:
-      - 8083:8083
+      - 8089:8089
     environment:
       KUMULUZEE_CONFIG_ETCD_HOSTS: http://etcd:2379
       KUMULUZEE_DISCOVERY_ETCD_HOSTS: http://etcd:2379
