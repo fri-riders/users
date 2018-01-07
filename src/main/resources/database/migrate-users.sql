@@ -1,5 +1,5 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 -- password: 123456
-INSERT INTO users (uuid, email, password, first_name, last_name, is_active, is_confirmed, created_at, updated_at, deleted_at) VALUES ('1bd484ed-b5ab-4f88-b57e-3c167d53ecb2', 'user1@example.com', '$31$16$G4lQfxUzuZNNX1FzJFdzC7_vzNKuOWtFDnASC4Hmw3E', 'User', 'One', TRUE, TRUE, TIMESTAMP '2017-01-12 12:00:00', NULL, NULL);
+INSERT INTO users (uuid, email, password, first_name, last_name, is_active, is_confirmed, created_at, updated_at, deleted_at) VALUES ('1bd484ed-b5ab-4f88-b57e-3c167d53ecb2', 'ts4293@student.uni-lj.si', '$31$16$G4lQfxUzuZNNX1FzJFdzC7_vzNKuOWtFDnASC4Hmw3E', 'User', 'ts4293', TRUE, TRUE, TIMESTAMP '2017-01-12 12:00:00', NULL, NULL);
 INSERT INTO users (uuid, email, password, first_name, last_name, is_active, is_confirmed, created_at, updated_at, deleted_at) VALUES ('1b9aec27-b80c-4baa-8467-2d0a89c5640c', 'user2@example.com', '$31$16$G4lQfxUzuZNNX1FzJFdzC7_vzNKuOWtFDnASC4Hmw3E', 'User', 'Two', TRUE, TRUE, TIMESTAMP '2017-01-12 12:00:00', NULL, NULL);
 INSERT INTO users (uuid, email, password, first_name, last_name, is_active, is_confirmed, created_at, updated_at, deleted_at) VALUES ('88eaeccc-7b77-439f-bba8-2525d2daa7f7', 'user3@example.com', '$31$16$G4lQfxUzuZNNX1FzJFdzC7_vzNKuOWtFDnASC4Hmw3E', 'User', 'Three', TRUE, TRUE, TIMESTAMP '2017-01-12 12:00:00', NULL, NULL);
