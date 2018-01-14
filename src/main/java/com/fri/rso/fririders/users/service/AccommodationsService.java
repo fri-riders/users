@@ -4,13 +4,11 @@ import com.fri.rso.fririders.users.util.Helpers;
 import com.kumuluz.ee.discovery.annotations.DiscoverService;
 import com.kumuluz.ee.discovery.enums.AccessType;
 import com.kumuluz.ee.fault.tolerance.annotations.CommandKey;
+import com.kumuluz.ee.fault.tolerance.annotations.GroupKey;
 import com.kumuluz.ee.logs.LogManager;
 import com.kumuluz.ee.logs.Logger;
 import com.kumuluz.ee.logs.cdi.Log;
-import org.eclipse.microprofile.faulttolerance.Asynchronous;
-import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
-import org.eclipse.microprofile.faulttolerance.Fallback;
-import org.eclipse.microprofile.faulttolerance.Timeout;
+import org.eclipse.microprofile.faulttolerance.*;
 
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
@@ -25,6 +23,8 @@ import java.util.Optional;
 
 @RequestScoped
 @Log
+@Bulkhead
+@GroupKey("users")
 public class AccommodationsService {
 
     private static final Logger log = LogManager.getLogger(AccommodationsService.class.getName());
@@ -35,7 +35,7 @@ public class AccommodationsService {
     @DiscoverService(value = "accommodations", version = "*", environment = "dev", accessType = AccessType.DIRECT)
     private Optional<String> accommodationsUrl;
 
-    @CircuitBreaker
+    @CircuitBreaker(requestVolumeThreshold = 2)
     @Fallback(fallbackMethod = "findAccommodationsFallback")
     @CommandKey("http-find-accommodations")
     @Timeout(value = 5, unit = ChronoUnit.SECONDS)

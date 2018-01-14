@@ -113,7 +113,7 @@ kumuluzee:
               buckets: 5
       http-auth-issue-jwt:
         timeout:
-          value: 5000ms
+          value: 1000ms
         circuit-breaker:
           request-threshold: 10
           failure-ratio: 0.3
@@ -124,7 +124,7 @@ kumuluzee:
               buckets: 5
       http-auth-verify-jwt:
         timeout:
-          value: 5000ms
+          value: 1000ms
         circuit-breaker:
           request-threshold: 10
           failure-ratio: 0.3

@@ -191,7 +191,7 @@ public class UserResource {
             } else {
                 log.warn("FAILED to received JWT for user");
 
-                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(Helpers.buildErrorJson("Login failed. Please try again,")).build();
+                return Response.status(Response.Status.SERVICE_UNAVAILABLE).entity(Helpers.buildErrorJson("Login failed. Please try again")).build();
             }
         } else {
             return Response.status(Response.Status.UNAUTHORIZED).entity(Helpers.buildErrorJson("Login failed. Make sure that you have entered the right email-password combination.")).build();
