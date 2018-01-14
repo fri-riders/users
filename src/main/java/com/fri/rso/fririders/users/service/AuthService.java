@@ -40,6 +40,7 @@ public class AuthService {
     @CommandKey("http-auth-issue-jwt")
     @Fallback(fallbackMethod = "getJwtForUserFallback")
     @Timeout(value = 1, unit = ChronoUnit.SECONDS)
+    @Retry
     @Asynchronous
     public Jwt getJwtForUser(String email) {
         if (this.authUrl.isPresent()) {
